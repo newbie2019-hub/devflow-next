@@ -9,15 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-tailwindcss": "^3.17.5",
     "next": "15.1.0",
-    "prettier": "^3.4.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "prettier": "^3.4.2",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-tailwindcss": "^3.17.5",
     "@eslint/eslintrc": "^3",
     "@types/node": "^20",
     "@types/react": "^19",
