@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss';
 
 export default {
+  darkMode: ['class'],
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -56,7 +57,7 @@ export default {
         'space-grotesk': ['var(--font-space-grotesk)'],
       },
     },
-    plugins: [],
   },
-  plugins: [],
+  //eslint-disable-next-line
+  plugins: [require('tailwindcss-animate')],
 } satisfies Config;
