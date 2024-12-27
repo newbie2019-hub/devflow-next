@@ -5,6 +5,18 @@ import HomeFilter from '@/components/filters/HomeFilter';
 import LocalSearch from '@/components/search/LocalSearch';
 import { Button } from '@/components/ui/button';
 import ROUTES from '@/constants/routes';
+import handleError from '@/lib/handlers/error';
+import { NotFoundError, ValidationError } from '@/lib/http-errors';
+
+const test = async () => {
+  try {
+    throw new ValidationError({
+      title: ['required'],
+    });
+  } catch (error) {
+    return handleError(error);
+  }
+};
 
 const questions = [
   {
@@ -65,6 +77,8 @@ interface SearchParams {
 }
 
 const Home = async ({ searchParams }: SearchParams) => {
+  const result = await test();
+  console.log(result);
   const { query = '', filter = '' } = await searchParams;
 
   const filteredQuestions = questions.filter((question) => {
