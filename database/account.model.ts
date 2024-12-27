@@ -23,6 +23,6 @@ const AccountSchema = new Schema<IAccount>(
 );
 
 // Check if the model is already created
-const Account = models?.Account || model<IAccount>('User', AccountSchema);
+const Account = models?.Account || model<IAccount>('Account', AccountSchema);
 
 export default Account;
