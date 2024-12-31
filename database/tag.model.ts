@@ -5,7 +5,9 @@ export interface ITag {
   questions: number;
 }
 
-const ModelSchema = new Schema<ITag>(
+export interface ITagDoc extends ITag, Document {}
+
+const TagSchema = new Schema<ITag>(
   {
     name: { type: String, required: true, unique: true },
     questions: { type: Number, default: 0 },
@@ -14,6 +16,6 @@ const ModelSchema = new Schema<ITag>(
 );
 
 // Check if the model is already created
-const Tag = models?.Tag || model<ITag>('Tag', ModelSchema);
+const Tag = models?.Tag || model<ITag>('Tag', TagSchema);
 
 export default Tag;

@@ -5,6 +5,7 @@ export interface ITagQuestion {
   question: Types.ObjectId;
 }
 
+export interface ITagQuestionDoc extends ITagQuestion, Document {}
 // Pivot Table for tags and questions
 const TagQuestionSchema = new Schema<ITagQuestion>(
   {

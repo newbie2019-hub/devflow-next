@@ -9,6 +9,8 @@ export interface IAccount {
   providerAccountId: string;
 }
 
+export interface IAccountDoc extends IAccount, Document {}
+
 const AccountSchema = new Schema<IAccount>(
   {
     // Foreign key equivalent for postgres or mysql
