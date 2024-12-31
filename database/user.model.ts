@@ -1,15 +1,9 @@
 import { Document, model, models, Schema } from 'mongoose';
+import { z } from 'zod';
 
-export interface IUser {
-  name: string;
-  username: string;
-  email: string;
-  bio?: string;
-  image?: string;
-  location?: string;
-  portfolio?: string;
-  reputation?: number;
-}
+import { UserSchema as UserValidationSchema } from '@/lib/validations';
+
+export type IUser = z.infer<typeof UserValidationSchema>;
 
 export interface IUserDoc extends IUser, Document {}
 
