@@ -62,15 +62,6 @@ const RootLayout = async ({
             {children}
           </ThemeProvider>
           <Toaster />
-          <div
-            id="g_id_onload"
-            data-client_id="554598974510-7opa977f2723ivkur8sg124g5ru0ac0t.apps.googleusercontent.com"
-            data-context="signin"
-            data-auto_prompt
-            data-login_uri="http://localhost:3000"
-            data-close_on_tap_outside="false"
-            data-itp_support="true"
-          ></div>
         </body>
         <script
           src="https://accounts.google.com/gsi/client"
