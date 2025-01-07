@@ -2,6 +2,7 @@ import Link from 'next/link';
 
 import ROUTES from '@/constants/routes';
 import { getTimeStamp } from '@/lib/utils';
+import { Question } from '@/types/global';
 
 import TagCard from './TagCard';
 import Metric from '../Metric';
@@ -42,7 +43,7 @@ const QuestionCard = ({
 
       <div className="flex-between mt-6 w-full flex-wrap gap-3">
         <Metric
-          imgUrl={author.image}
+          imgUrl={author.image!}
           alt={author.name}
           value={author.name}
           title={`• asked ${getTimeStamp(createdAt)}`}
