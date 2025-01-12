@@ -12,7 +12,7 @@ const RootLayout = async ({ children }: Readonly<{ children: ReactNode }>) => {
       <div className="flex">
         <LeftSidebar />
 
-        <section className="flex h-full min-h-[calc(100dvh-90px)] flex-1 flex-col px-6 pb-6 pt-20 max-md:pb-14 sm:px-14">
+        <section className="flex h-full min-h-[calc(100dvh-90px)] flex-1 flex-col overflow-y-auto px-6 pb-6 pt-20 max-md:pb-14 sm:px-14">
           <div className="mx-auto w-full max-w-5xl">{children}</div>
         </section>
 
