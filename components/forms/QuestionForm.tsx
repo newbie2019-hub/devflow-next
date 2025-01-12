@@ -11,8 +11,9 @@ import { z } from 'zod';
 
 import ROUTES from '@/constants/routes';
 import { toast } from '@/hooks/use-toast';
-import { createQuestion } from '@/lib/actions/question.action';
+import { createQuestion, editQuestion } from '@/lib/actions/question.action';
 import { AskQuestionSchema } from '@/lib/validations';
+import { Question } from '@/types/global';
 
 import TagCard from '../cards/TagCard';
 import { Button } from '../ui/button';
@@ -29,7 +30,12 @@ import { Input } from '../ui/input';
 
 const Editor = dynamic(() => import('@/components/editor'), { ssr: false });
 
-const QuestionForm = () => {
+interface Params {
+  question?: Question;
+  isEdit?: boolean;
+}
+
+const QuestionForm = ({ question, isEdit = false }: Params) => {
   const router = useRouter();
   const editorRef = useRef<MDXEditorMethods>(null);
   const [isPending, startTransition] = useTransition();
@@ -37,9 +43,9 @@ const QuestionForm = () => {
   const form = useForm<z.infer<typeof AskQuestionSchema>>({
     resolver: zodResolver(AskQuestionSchema),
     defaultValues: {
-      title: '',
-      content: '',
-      tags: [],
+      title: question?.title || '',
+      content: question?.content || '',
+      tags: question?.tags.map((tag) => tag.name) || [],
     },
   });
 
@@ -82,25 +88,55 @@ const QuestionForm = () => {
     }
   };
 
-  const handleCreateQuestion = async (
-    data: z.infer<typeof AskQuestionSchema>
-  ) => {
+  const saveQuestion = async (data: z.infer<typeof AskQuestionSchema>) => {
+    const result = await createQuestion(data);
+
+    if (result.success) {
+      toast({
+        title: 'Success',
+        description: 'Question created successfully!',
+      });
+
+      if (result.data) router.push(ROUTES.QUESTION(result.data?._id));
+    } else {
+      toast({
+        title: `Error ${result.status}`,
+        description: result.error?.message || 'Something went wrong',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const updateQuestion = async (data: z.infer<typeof AskQuestionSchema>) => {
+    const result = await editQuestion({
+      questionId: question!._id!,
+      ...data,
+    });
+
+    if (result.success) {
+      toast({
+        title: 'Success',
+        description: 'Question updated successfully!',
+      });
+
+      if (result.data) router.push(ROUTES.QUESTION(result.data?._id));
+    } else {
+      toast({
+        title: `Error ${result.status}`,
+        description: result.error?.message || 'Something went wrong',
+        variant: 'destructive',
+      });
+
+      return;
+    }
+  };
+
+  const handleFormSubmit = async (data: z.infer<typeof AskQuestionSchema>) => {
     startTransition(async () => {
-      const result = await createQuestion(data);
-
-      if (result.success) {
-        toast({
-          title: 'Succcess',
-          description: 'Question created successfully!',
-        });
-
-        if (result.data) router.push(ROUTES.QUESTION(result.data?._id));
+      if (isEdit && question) {
+        await updateQuestion(data);
       } else {
-        toast({
-          title: `Error ${result.status}`,
-          description: result.error?.message || 'Something went wrong',
-          variant: 'destructive',
-        });
+        await saveQuestion(data);
       }
     });
   };
@@ -109,7 +145,7 @@ const QuestionForm = () => {
     <Form {...form}>
       <form
         className="flex w-full flex-col gap-10"
-        onSubmit={form.handleSubmit(handleCreateQuestion)}
+        onSubmit={form.handleSubmit(handleFormSubmit)}
       >
         <FormField
           control={form.control}
@@ -211,7 +247,7 @@ const QuestionForm = () => {
                 <span>Submitting</span>
               </>
             ) : (
-              <> Ask A Question</>
+              <>{isEdit ? 'Update Question' : 'Ask A Question'}</>
             )}
           </Button>
         </div>

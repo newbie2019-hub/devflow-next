@@ -1,9 +1,21 @@
-import { RouteParams } from '@/types/global';
+import { redirect } from 'next/navigation';
 
-const QuestionDetails = async ({ params }: RouteParams) => {
-  const { id } = await params;
+import { auth } from '@/auth';
+import QuestionForm from '@/components/forms/QuestionForm';
 
-  return <div>Question Page: {id} </div>;
+const AskQuestion = async () => {
+  const session = await auth();
+  if (!session) return redirect('/sign-in');
+
+  return (
+    <div>
+      <h1 className="h1-bold text-dark100_light900">Ask a question</h1>
+
+      <div className="mt-8">
+        <QuestionForm />
+      </div>
+    </div>
+  );
 };
 
-export default QuestionDetails;
+export default AskQuestion;

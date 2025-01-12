@@ -52,6 +52,10 @@ export const AskQuestionSchema = z.object({
     .max(3, { message: 'Cannot add more than 3 tags' }),
 });
 
+export const EditQuestionSchema = AskQuestionSchema.extend({
+  questionId: z.string().min(1, { message: 'Question ID is required' }),
+});
+
 //Based on the User model in database/user.model.ts
 export const UserSchema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),
@@ -112,4 +116,16 @@ export const SignInWithOAuthSchema = z.object({
       .url({ message: 'Please provide a valid image URL' })
       .optional(),
   }),
+});
+
+export const GetQuestionSchema = z.object({
+  questionId: z.string().min(1, { message: 'Question ID is required' }),
+});
+
+export const PaginatedSearchParamsSchema = z.object({
+  page: z.number().int().positive().default(1),
+  pageSize: z.number().int().positive().default(10),
+  query: z.string().optional(),
+  filter: z.string().optional(),
+  sort: z.string().optional(),
 });
