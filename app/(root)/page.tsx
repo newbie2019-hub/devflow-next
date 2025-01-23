@@ -1,10 +1,12 @@
 import Link from 'next/link';
 
 import QuestionCard from '@/components/cards/QuestionCard';
+import DataRenderer from '@/components/DataRenderer';
 import HomeFilter from '@/components/filters/HomeFilter';
 import LocalSearch from '@/components/search/LocalSearch';
 import { Button } from '@/components/ui/button';
 import ROUTES from '@/constants/routes';
+import { EMPTY_QUESTION } from '@/constants/states';
 import { getQuestions } from '@/lib/actions/question.action';
 
 interface SearchParams {
@@ -43,14 +45,22 @@ const Home = async ({ searchParams }: SearchParams) => {
         />
       </section>
       <HomeFilter />
-      <div className="mt-10 flex w-full flex-col gap-6">
-        {questions?.map((question) => (
-          <QuestionCard
-            key={question._id}
-            question={question}
-          />
-        ))}
-      </div>
+      <DataRenderer
+        success={success}
+        error={error}
+        data={questions}
+        empty={EMPTY_QUESTION}
+        render={(questions) => (
+          <div className="mt-10 flex w-full flex-col gap-6">
+            {questions?.map((question) => (
+              <QuestionCard
+                key={question._id}
+                question={question}
+              />
+            ))}
+          </div>
+        )}
+      />
     </>
   );
 };
