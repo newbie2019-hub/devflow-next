@@ -15,7 +15,6 @@ const TagSchema = new Schema<ITag>(
   { timestamps: true }
 );
 
-// Check if the model is already created
 const Tag = models?.Tag || model<ITag>('Tag', TagSchema);
 
 export default Tag;
