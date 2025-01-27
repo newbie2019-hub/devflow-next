@@ -113,7 +113,7 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
       ...data,
     });
 
-    if (result.success) {
+    if (result?.success) {
       toast({
         title: 'Success',
         description: 'Question updated successfully!',
