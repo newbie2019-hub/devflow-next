@@ -69,7 +69,7 @@ const AskQuestion = async ({ params }: RouteParams) => {
           <Metric
             imgUrl="/icons/eye.svg"
             alt="clock icon"
-            value={formatNumber(views)}
+            value={formatNumber(views + 1)} // Add 1 as it doesnt increment
             title=""
             textStyles="small-regular text-dark400_light700"
           />
