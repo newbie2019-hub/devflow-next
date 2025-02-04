@@ -2,10 +2,9 @@
 
 import mongoose, { Error, FilterQuery } from 'mongoose';
 import { revalidatePath } from 'next/cache';
-import { AuthError } from 'next-auth';
 
 import ROUTES from '@/constants/routes';
-import Question, { IQuestionDoc } from '@/database/question.model';
+import Question from '@/database/question.model';
 import TagQuestion from '@/database/tag-question.model';
 import Tag, { ITagDoc } from '@/database/tag.model';
 import {
