@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import { after } from 'next/server';
 
 import TagCard from '@/components/cards/TagCard';
 import Preview from '@/components/editor/Preview';
@@ -12,11 +13,12 @@ import { RouteParams } from '@/types/global';
 
 const AskQuestion = async ({ params }: RouteParams) => {
   const { id } = await params;
+  const { success, data: question } = await getQuestion({ questionId: id });
 
-  const [_, { success, data: question }] = await Promise.all([
-    await incrementViews({ questionId: id }),
-    await getQuestion({ questionId: id }),
-  ]);
+  // Increment after view is rendered as this is non-blocking operation.
+  after(async () => {
+    await incrementViews({ questionId: id });
+  });
 
   if (!success || !question) return redirect('/404');
 
