@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import { useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-import { formUrlQuery, removeKeysFromQuery } from '@/lib/url';
-import { cn } from '@/lib/utils';
+import { formUrlQuery, removeKeysFromQuery } from "@/lib/url";
+import { cn } from "@/lib/utils";
 
-import { Button } from '../ui/button';
+import { Button } from "../ui/button";
 
 const filters = [
-  { name: 'React', value: 'react' },
-  { name: 'JavaScript', value: 'javascript' },
+  { name: "React", value: "react" },
+  { name: "JavaScript", value: "javascript" },
   // { name: 'Newest', value: 'newest' },
   // { name: 'Popular', value: 'popular' },
   // { name: 'Unanswered', value: 'unanswered' },
@@ -21,24 +21,24 @@ const filters = [
 const HomeFilter = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const filterParams = searchParams.get('filter');
-  const [active, setActive] = useState(filterParams || '');
+  const filterParams = searchParams.get("filter");
+  const [active, setActive] = useState(filterParams || "");
 
   const handleTypeClick = (filter: string) => {
-    let newUrl = '';
+    let newUrl = "";
 
     if (filter === active) {
-      setActive('');
+      setActive("");
 
       newUrl = removeKeysFromQuery({
         params: searchParams.toString(),
-        keysToRemove: ['filter'],
+        keysToRemove: ["filter"],
       });
     } else {
       setActive(filter);
       newUrl = formUrlQuery({
         params: searchParams.toString(),
-        key: 'filter',
+        key: "filter",
         value: filter.toLowerCase(),
       });
     }
@@ -52,8 +52,8 @@ const HomeFilter = () => {
           className={cn(
             `body-medium rounded-lg px-6 py-3 capitalize shadow-none`,
             active === filter.value
-              ? 'bg-primary-100 text-primary-500 hover:bg-primary-100 dark:bg-dark-400 dark:text-primary-500 dark:hover:bg-dark-400'
-              : 'bg-light-100 dark:!bg-dark-500 text-light-500 dark:bg-light-300 dark:text-light-500 dark:hover:!bg-dark-300'
+              ? "bg-primary-100 text-primary-500 hover:bg-primary-100 dark:bg-dark-400 dark:text-primary-500 dark:hover:bg-dark-400"
+              : "bg-light-100 dark:!bg-dark-500 text-light-500 dark:bg-light-300 dark:text-light-500 dark:hover:!bg-dark-300",
           )}
           key={filter.value}
           onClick={() => handleTypeClick(filter.value)}

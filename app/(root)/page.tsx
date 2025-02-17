@@ -1,13 +1,14 @@
-import Link from 'next/link';
+import Link from "next/link";
 
-import QuestionCard from '@/components/cards/QuestionCard';
-import DataRenderer from '@/components/DataRenderer';
-import HomeFilter from '@/components/filters/HomeFilter';
-import LocalSearch from '@/components/search/LocalSearch';
-import { Button } from '@/components/ui/button';
-import ROUTES from '@/constants/routes';
-import { EMPTY_QUESTION } from '@/constants/states';
-import { getQuestions } from '@/lib/actions/question.action';
+import QuestionCard from "@/components/cards/QuestionCard";
+import DataRenderer from "@/components/DataRenderer";
+import HomeFilter from "@/components/filters/HomeFilter";
+import LocalSearch from "@/components/search/LocalSearch";
+import { Button } from "@/components/ui/button";
+import ROUTES from "@/constants/routes";
+import { EMPTY_QUESTION } from "@/constants/states";
+import { getQuestions } from "@/lib/actions/question.action";
+import logger from "@/lib/logger";
 
 interface SearchParams {
   searchParams: Promise<{ [key: string]: string }>;
@@ -19,8 +20,8 @@ const Home = async ({ searchParams }: SearchParams) => {
   const { success, data, error } = await getQuestions({
     page: +page || 1,
     pageSize: +pageSize || 10,
-    query: query || '',
-    filter: filter || '',
+    query: query || "",
+    filter: filter || "",
   });
 
   const { questions } = data || {};
@@ -54,10 +55,7 @@ const Home = async ({ searchParams }: SearchParams) => {
         render={(questions) => (
           <div className="mt-10 flex w-full flex-col gap-6">
             {questions?.map((question) => (
-              <QuestionCard
-                key={question._id}
-                question={question}
-              />
+              <QuestionCard key={question._id} question={question} />
             ))}
           </div>
         )}

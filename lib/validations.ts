@@ -143,3 +143,11 @@ export const AnswerSchema = z.object({
     .string()
     .min(90, { message: 'Answer has to have more than 90 characters.' }),
 });
+
+export const AnswerServerSchema = AnswerSchema.extend({
+  questionId: z.string().min(1, { message: 'Question ID is required' }),
+});
+
+export const GetAnswersSchema = PaginatedSearchParamsSchema.extend({
+  questionId: z.string().min(1, { message: 'Question ID is required' }),
+});
