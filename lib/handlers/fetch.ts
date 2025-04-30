@@ -12,7 +12,7 @@ export async function fetchHandler<T>(
   url: string,
   options: FetchOptions = {}
 ): Promise<ActionResponse<T>> {
-  const { timeout = 5000, headers: customHeaders = {}, ...opt } = options;
+  const { timeout = 10000, headers: customHeaders = {}, ...opt } = options;
 
   const controller = new AbortController();
   // Abort the request if it excees 5 seconds

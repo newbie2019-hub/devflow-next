@@ -38,10 +38,10 @@ import '@mdxeditor/editor/style.css'; //import default styles
 interface Props {
   value: string;
   fieldChange: (value: string) => void;
-  editorRef: ForwardedRef<MDXEditorMethods> | null;
+  ref: ForwardedRef<MDXEditorMethods> | null;
 }
 
-const Editor = ({ value, fieldChange, editorRef, ...props }: Props) => {
+const Editor = ({ value, fieldChange, ref, ...props }: Props) => {
   const { resolvedTheme } = useTheme();
 
   const theme = resolvedTheme === 'dark' ? [basicDark] : [];
@@ -49,7 +49,7 @@ const Editor = ({ value, fieldChange, editorRef, ...props }: Props) => {
   return (
     <MDXEditor
       markdown={value}
-      ref={editorRef}
+      ref={ref}
       key={resolvedTheme}
       onChange={fieldChange}
       className="background-light800_dark200 light-border-2 markdown-editor dark-editor w-full border"

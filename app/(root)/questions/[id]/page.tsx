@@ -113,7 +113,11 @@ const AskQuestion = async ({ params }: RouteParams) => {
       </section>
 
       <section className="my-5">
-        <AnswerForm questionId={question._id} />
+        <AnswerForm
+          questionId={question._id}
+          questionContent={question.content}
+          questionTitle={question.title}
+        />
       </section>
     </>
   );
